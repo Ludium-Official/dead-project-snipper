@@ -1,0 +1,70 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table Projects {
+  project_id UUID PK
+  project_name Varchar
+  created_date datetime
+  recent_action_date datetime
+}
+
+Table FundedMembers {
+  project_id FK
+  name Varchar
+}
+
+Table XAccounts {
+  project_id FK
+  account_id Varcahr
+}
+
+Table GithubRepos {
+  project_id FK
+  owner_name Varchar
+  github_repo Varchar
+}
+
+Table NearAddress {
+  project_id FK
+  near_address Varchar
+}
+
+Table XActivityLog {
+  account_id FK
+  tweet Varchar
+  retweet_count int
+  like_count int
+  reply_count int
+  quote_count int
+  follower_count int
+  datetime datetime
+}
+
+Table GithubRepoActivityLog {
+  github_repo FK
+  commit_count int
+  issue_count int
+  PR_count int
+  watcher_count int
+  datetime datetime
+}
+
+Table OnChainActivityLog {
+  near_address FK
+  Activity_log varchar
+}
+
+
+Ref: NearAddress.project_id > Projects.project_id
+
+Ref: FundedMembers.project_id > Projects.project_id
+
+Ref: XAccounts.project_id > Projects.project_id
+
+Ref: GithubRepos.project_id > Projects.project_id
+
+Ref: GithubRepoActivityLog.github_repo > GithubRepos.github_repo
+
+Ref: XActivityLog.account_id > XAccounts.account_id
+
+Ref: OnChainActivityLog.near_address > NearAddress.near_address
