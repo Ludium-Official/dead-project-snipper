@@ -58,15 +58,6 @@ The project consist of three main flows, which is coded alphabetically.
     * In theory, Dead Project Snipper can be generally applied as a project assessment that can not only be applied to Grant Projects outside of Web3, but also any project that requires performance metrics (ex. investment, employment, etc)
     * In order for expansion, it will require multiple data points for the assessment and more developed scoring metrics that befits the purpose of the area of application
 
-### Budget and Milestones - Quick Start
-
-| Category | Justification | Time | Amount |
-| -------- | ------------- | ---- | ------ |
-| Planning | Collecting data, setting up score metrics, system architecture | 1 Week | $1,000 |
-| Backend Engineering | Setting up AWS, Data Point API, Near Data Connection | 1.5 Weeks | $2,000 |
-| Agent Engineering | Score calculator / Report agent setup | 1.5 Weeks | $2,000 |
-| Total |  | 4 Weeks | $5,000 |
-
 # Team
 
 * [Bigtide](https://github.com/HangryDev?tab=repositories): The team leader. Led multiple projects including [zkML project](https://devfolio.co/projects/leodevika-b20e) in Aleo and [agent based dev airdrop verifier](https://devfolio.co/projects/gajami-f679) project in Near.
