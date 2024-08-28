@@ -12,6 +12,7 @@ def connect_to_db():
     conn = pg.connect(
         host= your_host,
         port= your_port,
+        database= your_db,
         user= yout_user,
         password= your_password,
     )

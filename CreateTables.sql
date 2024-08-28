@@ -12,18 +12,19 @@ CREATE TABLE FundedMembers (
 
 CREATE TABLE XAccounts (
   project_id UUID REFERENCES Projects(project_id),
-  account_id VARCHAR
+  account_id VARCHAR UNIQUE
 );
 
 CREATE TABLE GithubRepos (
   project_id UUID REFERENCES Projects(project_id),
+  github_repo_id UUID UNIQUE,
   owner_name VARCHAR,
   github_repo VARCHAR
 );
 
 CREATE TABLE NearAddress (
   project_id UUID REFERENCES Projects(project_id),
-  near_address VARCHAR
+  near_address VARCHAR UNIQUE
 );
 
 CREATE TABLE XActivityLog (
@@ -38,7 +39,7 @@ CREATE TABLE XActivityLog (
 );
 
 CREATE TABLE GithubRepoActivityLog (
-  github_repo VARCHAR REFERENCES GithubRepos(github_repo),
+  github_repo_id UUID REFERENCES GithubRepos(github_repo_id),
   commit_count INT,
   issue_count INT,
   PR_count INT,

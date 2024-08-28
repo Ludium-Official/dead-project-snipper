@@ -15,18 +15,19 @@ Table FundedMembers {
 
 Table XAccounts {
   project_id FK
-  account_id Varcahr
+  account_id Varcahr Unique
 }
 
 Table GithubRepos {
   project_id FK
+  github_repo_id UUID Unique
   owner_name Varchar
   github_repo Varchar
 }
 
 Table NearAddress {
   project_id FK
-  near_address Varchar
+  near_address Varchar Unique
 }
 
 Table XActivityLog {
@@ -41,7 +42,7 @@ Table XActivityLog {
 }
 
 Table GithubRepoActivityLog {
-  github_repo FK
+  github_repo_id FK
   commit_count int
   issue_count int
   PR_count int
