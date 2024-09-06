@@ -1,0 +1,133 @@
+'''
+You will evaluate projects funded by Gitcoin grants based on their activity on Twitter (X) and GitHub.
+You should use specific scoring criteria to determine if the projects are still ongoing (alive) or not (dead).
+You will analyze the provided data, calculate scores according to the criteria, and generate a report for each project.
+I'm going to tell you the criteria soon.
+Say "yes" if you understood what you should do.
+'''
+
+## scoring criteria는 데이터프레임에 맞게 바꿔야 합니다.
+'''
+Here are the scoring criteria.
+
+1. Only on X
+   - Number of Posts Currently
+     - More than 50 posts in the last month: 10 points
+     - 20-50 posts in the last month: 7 points
+     - 5-19 posts in the last month: 4 points
+     - Less than 5 posts in the last month: 1 point
+
+   - Retweet Count (average per post)
+     - More than 20 retweets: 10 points
+     - 10-20 retweets: 7 points
+     - 5-9 retweets: 4 points
+     - Less than 5 retweets: 1 point
+
+   - Like Count (average per post)
+     - More than 50 likes: 10 points
+     - 20-49 likes: 7 points
+     - 10-19 likes: 4 points
+     - Less than 10 likes: 1 point
+
+   - Reply Count (average per post)
+     - More than 10 replies: 10 points
+     - 5-9 replies: 7 points
+     - 2-4 replies: 4 points
+     - Less than 2 replies: 1 point
+
+   - Quote Count (average per post)
+     - More than 5 quotes: 10 points
+     - 3-4 quotes: 7 points
+     - 1-2 quotes: 4 points
+     - Less than 1 quote: 1 point
+
+   - Follower Count
+     - More than 10,000 followers: 10 points
+     - 5,000-9,999 followers: 7 points
+     - 1,000-4,999 followers: 4 points
+     - Less than 1,000 followers: 1 point
+
+2. Both on X and GitHub
+   - X
+     - Same criteria as above
+
+   - GitHub
+     - Commit Count (within the last month)
+       - More than 20 commits: 12 points
+       - 10-20 commits: 9 points
+       - 3-9 commits: 5 points
+       - Less than 3 commits: 2 points
+       - No commits: 0 points
+
+     - Issue Count (within the last month)
+       - More than 10 issues: 10 points
+       - 5-10 issues: 7 points
+       - 1-4 issues: 4 points
+       - No issues: 1 point
+
+     - PR Count (within the last month)
+       - More than 10 PRs: 10 points
+       - 5-10 PRs: 7 points
+       - 1-4 PRs: 4 points
+       - No PRs: 1 point
+
+     - Watcher Count
+       - More than 50 watchers: 10 points
+       - 20-49 watchers: 7 points
+       - 10-19 watchers: 4 points
+       - Less than 10 watchers: 1 point
+
+```
+Say "yes" if you understood how to calculate the criteria.
+'''
+
+'''
+And here is the example of the report that you have to make in the end.
+
+[report example]
+Project Evaluation Report
+Project Name: OpenSourceWidget
+Evaluation: Alive
+Reason:
+Based on the data, I would evaluate OpenSourceWidget as Alive.
+
+Because the project has shown significant activity on both Twitter and GitHub, it has a high level of engagement with 45 posts, an average of 15 retweets and 35 likes per post, and a follower count of 6,200. Additionally, the GitHub activity is strong with 18 commits, 7 issues, and 5 pull requests, along with an increase of 30 watchers. This indicates that the project is still ongoing and actively maintained.
+
+Twitter (X) Activity:
+
+Number of Posts Currently: 45 ( 7 points )
+Retweet Count (average per post): 15 ( 7 points )
+Like Count (average per post): 35 ( 7 points )
+Reply Count (average per post): 8 ( 7 points )
+Quote Count (average per post): 3 ( 7 points )
+Follower Count: 6,200 ( 7 points )
+
+GitHub Activity:
+Commit Count : 18 ( 9 points )
+Issue Count : 7 ( 7 points )
+PR Count : 5 ( 7 points )
+Watcher Count: Increased by 30 ( 7 points )
+Total Points: 76 out of 100
+
+```
+Say "yes" if you understood the format of the report.
+'''
+
+## 실제 데이터프레임 불러오는 코드로 바꿔야 합니다.
+'''
+Now, let's do it with the real data.
+
+```
+Here is the data.
+
+"number of posts": 45,
+    "average retweets": 15,
+    "average likes": 35,
+    "average replies": 8,
+    "average quotes": 3,
+    "number of followers": 6200,
+    "number of commits": 18,
+    "number of issues": 7,
+    "number of PRs": 5,
+    "number of watchers": 30
+'''
