@@ -60,8 +60,11 @@ The project consist of three main flows, which is coded alphabetically.
 
 # Team
 
-* [Bigtide](https://github.com/HangryDev?tab=repositories): The team leader. Led multiple projects including [zkML project](https://devfolio.co/projects/leodevika-b20e) in Aleo and [agent based dev airdrop verifier](https://devfolio.co/projects/gajami-f679) project in Near.
-* [Sokihoon](https://www.notion.so/1de0b8bdb0754a3d9d1f6e346b878b59?pvs=21): AI engineer with R&D and project experiences including image deep learning platform for premium fabric performance prediction, AI based CAD design optimization for shipbuilding, and no code machine learning platform development
+* [Hankeol Jeong/ Bigtide](https://github.com/HangryDev?tab=repositories): The team leader.
+* Led multiple projects including [zkML project](https://devfolio.co/projects/leodevika-b20e) in Aleo
+* [agent based dev airdrop verifier](https://devfolio.co/projects/gajami-f679) project in Near - Ethseoul 2024 - 3rd in Near AI Governance. 
+* [Sokihoon](https://www.notion.so/1de0b8bdb0754a3d9d1f6e346b878b59?pvs=21):
+* AI engineer with R&D and project experiences including image deep learning platform for premium fabric performance prediction, AI based CAD design optimization for shipbuilding, and no code machine learning platform development
 * [Ludium](https://docs.google.com/presentation/d/15mmCJ2OYudZY1ncR8kX_eJsq8x8QaTjuOs80ep_TmwE/edit?usp=sharing): Ludium is Web3 builder community with 1,800 + active contributors. It provides opportunities for builders ranging from education, hackathon, to open source contribution based works.
 
 # Questions / Support / Request
