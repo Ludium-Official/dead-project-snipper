@@ -1,6 +1,5 @@
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
-
 Table Projects {
   project_id UUID PK
   project_name Varchar
@@ -8,43 +7,42 @@ Table Projects {
   recent_action_date datetime
 }
 
-Table XAccounts (
-  project_id UUID FK,
-  user_id INT pk,
+Table XAccounts {
+  project_id UUID
+  user_id INT pk
   user_name VARCHAR
-);
+}
 
-Table XFollowers (
-  followers_id VARCHAR pk,
-  user_id INT FK
-)
+Table XFollowers {
+  followers_id VARCHAR pk
+  user_id INT
+}
 
-Table XActivityLog (
-  tweet_id INT pk,
-  account_id INT FK,
-  like_count INT,
-  reply_count INT,
-  retweet_count INT,
-  views INT,
-  tweet VARCHAR,
+Table XActivityLog {
+  tweet_id INT pk
+  account_id INT
+  like_count INT
+  reply_count INT
+  retweet_count INT
+  views INT
+  tweet VARCHAR
   timeparsed VARCHAR
-);
-
-Table GithubRepos (
-  project_id INT FK,
-  project_id INT,
-  user_id INT,
+}
+  
+Table GithubRepos {
+  project_id INT
+  user_id INT
   repo_id INT pk
-);
+}
 
-Table GithubCommitLog (
-  github_repo_id FK,
-  commit_count INT,
-  issue_count INT,
-  PR_count INT,
-  watcher_count INT,
+Table GithubCommitLog {
+  github_repo_id FK
+  commit_count int
+  issue_count INT
+  PR_count INT
+  watcher_count INT
   datetime TIMESTAMP
-);
+}
 
 Table FundedMembers {
   project_id FK
@@ -70,7 +68,7 @@ Ref: XActivityLog.account_id > XAccounts.user_id
 
 Ref: GithubRepos.project_id > Projects.project_id
 
-Ref: GithubCommitLog.github_repo_id > GithubRepos.github_repo_id
+Ref: GithubCommitLog.github_repo_id > GithubRepos.repo_id
 
 Ref: NearAddress.project_id > Projects.project_id
 
