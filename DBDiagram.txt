@@ -1,11 +1,47 @@
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
-
 Table Projects {
   project_id UUID PK
   project_name Varchar
-  created_date datetime
+  created_date varchar
   recent_action_date datetime
+}
+
+Table XAccounts {
+  project_id UUID
+  user_id INT pk
+  user_name VARCHAR
+}
+
+Table XFollowers {
+  followers_id VARCHAR pk
+  user_id INT
+}
+
+Table XActivityLog {
+  tweet_id INT pk
+  account_id INT
+  like_count INT
+  reply_count INT
+  retweet_count INT
+  views INT
+  tweet VARCHAR
+  timeparsed VARCHAR
+}
+  
+Table GithubRepos {
+  project_id INT
+  user_id INT
+  repo_id INT pk
+}
+
+Table GithubCommitLog {
+  github_repo_id FK
+  commit_count int
+  issue_count INT
+  PR_count INT
+  watcher_count INT
+  datetime TIMESTAMP
 }
 
 Table FundedMembers {
@@ -13,41 +49,9 @@ Table FundedMembers {
   name Varchar
 }
 
-Table XAccounts {
-  project_id FK
-  account_id Varcahr Unique
-}
-
-Table GithubRepos {
-  project_id FK
-  github_repo_id UUID Unique
-  owner_name Varchar
-  github_repo Varchar
-}
-
 Table NearAddress {
   project_id FK
   near_address Varchar Unique
-}
-
-Table XActivityLog {
-  account_id FK
-  tweet Varchar
-  retweet_count int
-  like_count int
-  reply_count int
-  quote_count int
-  follower_count int
-  datetime datetime
-}
-
-Table GithubRepoActivityLog {
-  github_repo_id FK
-  commit_count int
-  issue_count int
-  PR_count int
-  watcher_count int
-  datetime datetime
 }
 
 Table OnChainActivityLog {
@@ -56,16 +60,18 @@ Table OnChainActivityLog {
 }
 
 
-Ref: NearAddress.project_id > Projects.project_id
-
-Ref: FundedMembers.project_id > Projects.project_id
-
 Ref: XAccounts.project_id > Projects.project_id
+
+Ref: XFollowers.user_id > XAccounts.user_id
+
+Ref: XActivityLog.account_id > XAccounts.user_id
 
 Ref: GithubRepos.project_id > Projects.project_id
 
-Ref: GithubRepoActivityLog.github_repo > GithubRepos.github_repo
+Ref: GithubCommitLog.github_repo_id > GithubRepos.repo_id
 
-Ref: XActivityLog.account_id > XAccounts.account_id
+Ref: NearAddress.project_id > Projects.project_id
+
+Ref: FundedMembers.project_id > Projects.project_id
 
 Ref: OnChainActivityLog.near_address > NearAddress.near_address
