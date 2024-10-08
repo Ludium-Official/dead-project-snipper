@@ -29,8 +29,7 @@ CREATE TABLE XActivityLog (
 );
 
 CREATE TABLE GithubRepos (
-  project_id UUID REFERENCES Projects(project_id),
-  project_id INT,
+  project_id INT REFERENCES Projects(project_id),
   user_id INT,
   repo_id INT PRIMARY KEY
 );

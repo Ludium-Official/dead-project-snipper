@@ -4,50 +4,56 @@
 Table Projects {
   project_id UUID PK
   project_name Varchar
-  created_date datetime
+  created_date varchar
   recent_action_date datetime
 }
+
+Table XAccounts (
+  project_id UUID FK,
+  user_id INT pk,
+  user_name VARCHAR
+);
+
+Table XFollowers (
+  followers_id VARCHAR pk,
+  user_id INT FK
+)
+
+Table XActivityLog (
+  tweet_id INT pk,
+  account_id INT FK,
+  like_count INT,
+  reply_count INT,
+  retweet_count INT,
+  views INT,
+  tweet VARCHAR,
+  timeparsed VARCHAR
+);
+
+Table GithubRepos (
+  project_id INT FK,
+  project_id INT,
+  user_id INT,
+  repo_id INT pk
+);
+
+Table GithuCommitLog (
+  github_repo_id FK,
+  commit_count INT,
+  issue_count INT,
+  PR_count INT,
+  watcher_count INT,
+  datetime TIMESTAMP
+);
 
 Table FundedMembers {
   project_id FK
   name Varchar
 }
 
-Table XAccounts {
-  project_id FK
-  account_id Varcahr Unique
-}
-
-Table GithubRepos {
-  project_id FK
-  github_repo_id UUID Unique
-  owner_name Varchar
-  github_repo Varchar
-}
-
 Table NearAddress {
   project_id FK
   near_address Varchar Unique
-}
-
-Table XActivityLog {
-  account_id FK
-  tweet Varchar
-  retweet_count int
-  like_count int
-  reply_count int
-  quote_count int
-  follower_count int
-  datetime datetime
-}
-
-Table GithubRepoActivityLog {
-  github_repo_id FK
-  commit_count int
-  issue_count int
-  PR_count int
-  watcher_count int
-  datetime datetime
 }
 
 Table OnChainActivityLog {
