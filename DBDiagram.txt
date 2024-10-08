@@ -45,9 +45,11 @@ Table XActivityLog {
 Table GithubRepoActivityLog {
   github_repo_id FK
   commit_count int
-  issue_count int
+  open_issue_count int
+  closed_issue_count int
   PR_count int
   watcher_count int
+  fork_count int
   datetime datetime
 }
 
