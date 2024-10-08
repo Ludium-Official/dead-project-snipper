@@ -37,7 +37,7 @@ Table GithubRepos (
   repo_id INT pk
 );
 
-Table GithuCommitLog (
+Table GithubCommitLog (
   github_repo_id FK,
   commit_count INT,
   issue_count INT,
@@ -62,16 +62,18 @@ Table OnChainActivityLog {
 }
 
 
-Ref: NearAddress.project_id > Projects.project_id
-
-Ref: FundedMembers.project_id > Projects.project_id
-
 Ref: XAccounts.project_id > Projects.project_id
+
+Ref: XFollowers.user_id > XAccounts.user_id
+
+Ref: XActivityLog.account_id > XAccounts.user_id
 
 Ref: GithubRepos.project_id > Projects.project_id
 
-Ref: GithubRepoActivityLog.github_repo > GithubRepos.github_repo
+Ref: GithubCommitLog.github_repo_id > GithubRepos.github_repo_id
 
-Ref: XActivityLog.account_id > XAccounts.account_id
+Ref: NearAddress.project_id > Projects.project_id
+
+Ref: FundedMembers.project_id > Projects.project_id
 
 Ref: OnChainActivityLog.near_address > NearAddress.near_address
