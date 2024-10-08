@@ -3,7 +3,6 @@
 
 Table Projects {
   project_id UUID PK
-  project_name varchar
   project_url URL
   created_date datetime
   recent_action_date datetime
