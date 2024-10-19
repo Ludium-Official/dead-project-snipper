@@ -1,37 +1,39 @@
 // Use DBML to define your database structure
 // Docs: https://dbml.dbdiagram.io/docs
 
+Table AllUsers {
+  id Varchar
+  total_donations_in_usd float
+  total_donations_out_usd float
+  total_matching_pool_allocations_usd float
+  donors_count int
+  near_social_profile_data JSON
+}
+
 Table Projects {
-  project_id UUID PK
-  project_url URL
+  project_wallet_address PK
+  project_potlock_url URL
+  project_official_website_url URL
   created_date datetime
-  recent_action_date datetime
 }
 
-Table FundedMembers {
-  project_id FK
-  name Varchar
-}
-
-Table XAccounts {
-  project_id FK
-  account_id Varcahr Unique
+Table XHandles {
+  project_wallet_address FK
+  handle Varchar Unique
+  account_id Varcahr 
+  Description varchar
+  created_date datetime
 }
 
 Table GithubRepos {
-  project_id FK
+  project_wallet_address FK
   github_repo_id UUID Unique
   owner_name Varchar
   github_repo Varchar
 }
 
-Table NearAddress {
-  project_id FK
-  near_address Varchar Unique
-}
-
 Table XActivityLog {
-  account_id FK
+  handle FK
   tweet Varchar
   retweet_count int
   like_count int
@@ -54,31 +56,38 @@ Table GithubRepoActivityLog {
   datetime datetime
 }
 
-Table OnChainActivityLog {
-  near_address FK
-  Activity_log varchar
+Table WalletActivityLog {
+  project_wallet_address FK
+  sent_cout int
+  recieved_count int
 }
 
 Table ProjectReport {
-  project_id FK
+  project_wallet_address FK
   report varchar
   created_date datetime
   modified_date datetime
   most_recent bool
 }
 
-Ref: NearAddress.project_id > Projects.project_id
+Table XHandlesDailyFollowInfo {
+  handle FK
+  following_count int
+  follower_count int
+}
 
-Ref: FundedMembers.project_id > Projects.project_id
 
-Ref: XAccounts.project_id > Projects.project_id
+Ref: XHandles.project_wallet_address > Projects.project_wallet_address
 
-Ref: GithubRepos.project_id > Projects.project_id
+Ref: GithubRepos.project_wallet_address > Projects.project_wallet_address
 
 Ref: GithubRepoActivityLog.github_repo_id > GithubRepos.github_repo_id
 
-Ref: XActivityLog.account_id > XAccounts.account_id
+Ref: XActivityLog.handle > XHandles.handle
 
-Ref: OnChainActivityLog.near_address > NearAddress.near_address
+Ref: XHandlesDailyFollowInfo.handle > XHandles.handle
 
-Ref: ProjectReport.project_id >  Projects.project_id
+Ref: WalletActivityLog.project_wallet_address > Projects.project_wallet_address
+
+Ref: ProjectReport.project_wallet_address >  Projects.project_wallet_address
+

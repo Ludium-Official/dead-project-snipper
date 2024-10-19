@@ -1,10 +1,10 @@
 TRUNCATE TABLE ProjectReport,
-                OnChainActivityLog,
+                WalletActivityLog,
                 GithubRepoActivityLog,
                 XActivityLog,
-                NearAddress,
+                XHandlesDailyFollowInfo,
                 GithubRepos,
-                XAccounts,
-                FundedMembers,
+                XHandles,
+                AllUsers,
                 Projects
                 RESTART IDENTITY CASCADE;
