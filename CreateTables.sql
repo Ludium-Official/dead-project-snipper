@@ -19,11 +19,11 @@ CREATE TABLE IF NOT EXISTS Projects (
 -- Table XHandles
 CREATE TABLE IF NOT EXISTS XHandles (
     project_wallet_address VARCHAR REFERENCES Projects(project_wallet_address),
-    handle VARCHAR UNIQUE,
+    handle VARCHAR UNIQUE Null,
     account_id VARCHAR,
     Description VARCHAR,
-    created_date TIMESTAMP,
-    PRIMARY KEY (project_wallet_address, handle)
+    condition VARCHAR(20),
+    created_date TIMESTAMP
 );
 
 -- Table GithubRepos
@@ -37,12 +37,11 @@ CREATE TABLE IF NOT EXISTS GithubRepos (
 -- Table XActivityLog
 CREATE TABLE IF NOT EXISTS XActivityLog (
     handle VARCHAR REFERENCES XHandles(handle),
-    tweet VARCHAR,
+    tweet VARCHAR UNIQUE,
     retweet_count INT,
     like_count INT,
     reply_count INT,
-    quote_count INT,
-    follower_count INT,
+    watch_count INT,
     datetime TIMESTAMP
 );
 
@@ -71,6 +70,8 @@ CREATE TABLE IF NOT EXISTS WalletActivityLog (
 CREATE TABLE IF NOT EXISTS ProjectReport (
     project_wallet_address VARCHAR REFERENCES Projects(project_wallet_address),
     report VARCHAR,
+    score FLOAT,
+    dead_or_alive BOOLEAN,
     created_date TIMESTAMP,
     modified_date TIMESTAMP,
     most_recent BOOLEAN
@@ -79,8 +80,12 @@ CREATE TABLE IF NOT EXISTS ProjectReport (
 -- Table XHandlesDailyFollowInfo
 CREATE TABLE IF NOT EXISTS XHandlesDailyFollowInfo (
     handle VARCHAR REFERENCES XHandles(handle),
+    favourites_count INT,
     following_count INT,
-    follower_count INT
+    followers_count INT,
+    listed_count INT,
+    media_count INT,
+    datetime TIMESTAMP
 );
 
 -- Foreign Key Constraints (already defined within tables)

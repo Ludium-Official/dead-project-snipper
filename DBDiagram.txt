@@ -22,6 +22,7 @@ Table XHandles {
   handle Varchar Unique
   account_id Varcahr 
   Description varchar
+  condition varchar
   created_date datetime
 }
 
@@ -34,12 +35,11 @@ Table GithubRepos {
 
 Table XActivityLog {
   handle FK
-  tweet Varchar
+  tweet Varchar Unique
   retweet_count int
   like_count int
   reply_count int
-  quote_count int
-  follower_count int
+  watch_count int
   datetime datetime
 }
 
@@ -65,6 +65,8 @@ Table WalletActivityLog {
 Table ProjectReport {
   project_wallet_address FK
   report varchar
+  score int
+  dead_or_alive bool
   created_date datetime
   modified_date datetime
   most_recent bool
@@ -72,8 +74,12 @@ Table ProjectReport {
 
 Table XHandlesDailyFollowInfo {
   handle FK
+  favourites_count int
   following_count int
-  follower_count int
+  followers_count int
+  listed_count int
+  media_count int
+  datetime datetime
 }
 
 
@@ -90,4 +96,3 @@ Ref: XHandlesDailyFollowInfo.handle > XHandles.handle
 Ref: WalletActivityLog.project_wallet_address > Projects.project_wallet_address
 
 Ref: ProjectReport.project_wallet_address >  Projects.project_wallet_address
-
