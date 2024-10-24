@@ -1,0 +1,98 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table AllUsers {
+  id Varchar
+  total_donations_in_usd float
+  total_donations_out_usd float
+  total_matching_pool_allocations_usd float
+  donors_count int
+  near_social_profile_data JSON
+}
+
+Table Projects {
+  project_wallet_address PK
+  project_potlock_url URL
+  project_official_website_url URL
+  created_date datetime
+}
+
+Table XHandles {
+  project_wallet_address FK
+  handle Varchar Unique
+  account_id Varcahr 
+  Description varchar
+  condition varchar
+  created_date datetime
+}
+
+Table GithubRepos {
+  project_wallet_address FK
+  github_repo_id UUID Unique
+  owner_name Varchar
+  github_repo Varchar
+}
+
+Table XActivityLog {
+  handle FK
+  tweet Varchar Unique
+  retweet_count int
+  like_count int
+  reply_count int
+  watch_count int
+  datetime datetime
+}
+
+Table GithubRepoActivityLog {
+  github_repo_id FK
+  daily_commit_count int
+  daily_open_issue_count int
+  daily_closed_issue_count int
+  daily_pull_count int
+  daily_merge_count int
+  watchers_count int
+  stars_count int
+  forks_count int
+  datetime datetime
+}
+
+Table WalletActivityLog {
+  project_wallet_address FK
+  sent_cout int
+  recieved_count int
+}
+
+Table ProjectReport {
+  project_wallet_address FK
+  report varchar
+  score int
+  dead_or_alive bool
+  created_date datetime
+  modified_date datetime
+  most_recent bool
+}
+
+Table XHandlesDailyFollowInfo {
+  handle FK
+  favourites_count int
+  following_count int
+  followers_count int
+  listed_count int
+  media_count int
+  datetime datetime
+}
+
+
+Ref: XHandles.project_wallet_address > Projects.project_wallet_address
+
+Ref: GithubRepos.project_wallet_address > Projects.project_wallet_address
+
+Ref: GithubRepoActivityLog.github_repo_id > GithubRepos.github_repo_id
+
+Ref: XActivityLog.handle > XHandles.handle
+
+Ref: XHandlesDailyFollowInfo.handle > XHandles.handle
+
+Ref: WalletActivityLog.project_wallet_address > Projects.project_wallet_address
+
+Ref: ProjectReport.project_wallet_address >  Projects.project_wallet_address
