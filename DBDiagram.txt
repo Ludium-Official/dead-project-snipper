@@ -30,7 +30,7 @@ Table GithubRepos {
   project_wallet_address FK
   github_repo_id UUID Unique
   owner_name Varchar
-  github_repo Varchar
+  repo_name Varchar
 }
 
 Table XActivityLog {
@@ -58,8 +58,7 @@ Table GithubRepoActivityLog {
 
 Table WalletActivityLog {
   project_wallet_address FK
-  sent_cout int
-  recieved_count int
+  transaction_count int
 }
 
 Table ProjectReport {

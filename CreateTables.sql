@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS GithubRepos (
     project_wallet_address VARCHAR REFERENCES Projects(project_wallet_address),
     github_repo_id UUID UNIQUE PRIMARY KEY,
     owner_name VARCHAR,
-    github_repo VARCHAR
+    repo_name VARCHAR
 );
 
 -- Table XActivityLog
@@ -62,8 +62,7 @@ CREATE TABLE IF NOT EXISTS GithubRepoActivityLog (
 -- Table WalletActivityLog
 CREATE TABLE IF NOT EXISTS WalletActivityLog (
     project_wallet_address VARCHAR REFERENCES Projects(project_wallet_address),
-    sent_count INT,
-    received_count INT
+    trasaction_count INT,
 );
 
 -- Table ProjectReport
