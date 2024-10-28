@@ -4,6 +4,7 @@ import traceback
 from datetime import datetime
 import time
 import random
+import logger
 
 
 # db
@@ -22,10 +23,10 @@ from playwright.sync_api import sync_playwright
 def connect_to_db():
     conn = pg.connect(
         host=your_host,
-        port=your_port,
-        database=your_db,
-        user=your_user,
-        password=your_password
+        port= your_port,
+        database= your_db,
+        user= your_user,
+        password= your_password,
     )
     return conn
 
@@ -66,7 +67,7 @@ def insert_empty_xhandle(conn, project_wallet_address, handle):
 
     sql = """
     INSERT INTO XHandles
-    (project_wallet_address, handle condition)
+    (project_wallet_address, handle, condition)
     VALUES
     (%s, %s, %s)
     On Conflict (handle)
@@ -96,7 +97,7 @@ def insert_xactivitylog(conn, handle, data:json, crawl_date:datetime):
     (
         %s, %s, %s, %s, %s, %s, %s, %s
     )
-    ON CONFLICT (tweet)
+    ON CONFLICT (handle, datetime)
     DO UPDATE SET
         retweet_count = EXCLUDED.retweet_count,
         reply_count = EXCLUDED.reply_count,
@@ -153,41 +154,16 @@ def insert_xfollow(conn, handle, today:datetime, data:json):
 
 
 def get_all_handles(conn):
-    # select_sql = """
-    # WITH subquery AS (
-    #     SELECT  
-    #         project_wallet_address, 
-    #         handle,
-    #         condition
-    #     FROM xhandles
-    #     WHERE handle IS NOT NULL 
-    #     AND handle != ''
-    # )
-    # -- Now check if all 'condition' values in the subquery are NULL
-    # SELECT project_wallet_address, handle
-    # FROM subquery
-    # WHERE 
-    #     -- If all 'condition' values are NULL, return the entire subquery
-    #     (SELECT COUNT(*) FROM subquery WHERE condition IS NOT NULL) = 0
-    #     -- Otherwise, return only those rows where condition is not 'UnavailableUser'
-    #     OR (condition IS NOT NULL AND condition != 'UnavailableUser');
-    
-    # """
-
-    # select_sql = """
-    # SELECT project_wallet_address, handle
-    # FROM xhandles
-    # WHERE handle IS NOT NULL
-    # and handle != '';
-    # """
 
     select_sql = """
-    SELECT project_wallet_address, handle
-    from xhandles
-    where handle is not null
-    and handle != ''
-    and condition is null;
+    SELECT  
+            project_wallet_address, 
+            handle
+    FROM xhandles
+    where (handle IS NOT null and handle != '')  
+    and (condition = 'User' or condition is null);
     """
+    
 
     with conn.cursor() as cur:
         cur.execute(select_sql)
@@ -196,13 +172,14 @@ def get_all_handles(conn):
     return data
 
 def main():
-
+    logger.log_start_process("InsertTwitterData.py")
     #0. get all handles
     conn = connect_to_db()
+    logger.log_info("connected to the DB")
+
     handles = get_all_handles(conn)
     print(f"handles length : {len(handles)}")
-    random.shuffle(handles)
-    print("not handled handles : ", handles)
+    logger.log_selction_data(len(handles))
     
     today = datetime.now().date()
     #1. login to twitter
@@ -225,38 +202,43 @@ def main():
                 failed_handles.append((wallet_address, handle))
                 connect_commit(conn)
                 continue
-
-            
+        
             user_profile = user_profile['user']['result']
             insert_xhandle(conn, wallet_address, handle, user_profile)
+            logger.log_user_profile(handle)
             print(f"[INFO] inserted the xhandle data | user : {handle}")
 
             # insert xactivitylog
             user_tweets = getTweet.scroll_and_crawl(handle, logined_browser, logined_page, max_scrolls=10, crawl_interval=2)
             insert_xactivitylog(conn, handle, user_tweets, today)
+            logger.log_user_tweets(handle)
             print("[INFO] inserted the xactivitylog data")
 
             # insert xfollow
             insert_xfollow(conn, handle, today, user_profile)
+            logger.log_user_followers(handle)
             print("[INFO] inserted the xfollow data")
 
         except Exception as e:
-
+            logger.log_error(handle, traceback.format_exc())
             print(f"[ERROR] raised while handling the twitter data on address : {wallet_address} / handle : {handle}")
             print(traceback.format_exc())
             connect_rollback(conn)
-            # failed_handles.append((wallet_address, handle))
+            failed_handles.append((wallet_address, handle))
             continue
         else:
             connect_commit(conn)
-    # 3. close the connection
 
+    # 3. close the connection
     close_connection(conn)
+    logger.log_disconnection()
+
     print("[INFO] closed the DB connection")
     # 4. close the browser
     logined_browser.close()
     print("[INFO] closed the browser")
     print(f"[INFO] failed handles : {failed_handles}")
+    logger.log_end_process("InsertTwitterData.py")
 
 if __name__ == '__main__':
     main()
