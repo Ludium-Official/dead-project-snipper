@@ -37,12 +37,16 @@ CREATE TABLE IF NOT EXISTS GithubRepos (
 -- Table XActivityLog
 CREATE TABLE IF NOT EXISTS XActivityLog (
     handle VARCHAR REFERENCES XHandles(handle),
-    tweet VARCHAR UNIQUE,
+    tweet VARCHAR,
     retweet_count INT,
     like_count INT,
     reply_count INT,
     watch_count INT,
-    datetime TIMESTAMP
+    datetime TIMESTAMP,
+    updated_datetime TIMESTAMP
+
+    -- Unique constraint on handle and datetime --
+    CONSTRAINT unique_handle_created_datetime UNIQUE (handle, datetime)
 );
 
 -- Table GithubRepoActivityLog
@@ -53,7 +57,7 @@ CREATE TABLE IF NOT EXISTS GithubRepoActivityLog (
     daily_closed_issue_count INT,
     daily_pull_count INT,
     daily_merge_count INT,
-    watchers_count INT,
+    subscribers_count INT,
     stars_count INT,
     forks_count INT,
     datetime TIMESTAMP

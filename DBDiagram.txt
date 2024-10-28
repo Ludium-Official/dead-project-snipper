@@ -43,6 +43,12 @@ Table XActivityLog {
   datetime datetime
 }
 
+// Composite unique key on handle and created_datetime
+Index unique_handle_created_datetime {
+    fields: [handle, created_datetime]
+    unique: true
+}
+
 Table GithubRepoActivityLog {
   github_repo_id FK
   daily_commit_count int
@@ -50,7 +56,7 @@ Table GithubRepoActivityLog {
   daily_closed_issue_count int
   daily_pull_count int
   daily_merge_count int
-  watchers_count int
+  subscribers_count int
   stars_count int
   forks_count int
   datetime datetime
@@ -79,6 +85,7 @@ Table XHandlesDailyFollowInfo {
   listed_count int
   media_count int
   datetime datetime
+  updated_datetime datetime
 }
 
 
@@ -95,3 +102,4 @@ Ref: XHandlesDailyFollowInfo.handle > XHandles.handle
 Ref: WalletActivityLog.project_wallet_address > Projects.project_wallet_address
 
 Ref: ProjectReport.project_wallet_address >  Projects.project_wallet_address
+
