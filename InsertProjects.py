@@ -4,6 +4,7 @@ import psycopg2.extras
 
 import json
 import traceback
+import logger
 from datetime import datetime
 from psycopg2.sql import SQL, Literal
 from uuid import uuid4
@@ -11,11 +12,11 @@ from uuid import uuid4
 def connect_to_db():
     conn = pg.connect(
         # host= os.getenv('DB_HOST'),
-        host=youre_host,
-        port=your_port,
-        database=your_db,
-        user=your_user,
-        password=your_password
+        host=your_host,
+        port= your_port,
+        database= your_db,
+        user= your_user,
+        password= your_password,
     )
     return conn
 
@@ -105,13 +106,13 @@ def insert_to_related_table_at_once(conn, data_list):
         project_wallet_address,
         github_repo_id,
         owner_name,
-        github_repo
+        repo_name
         )
     VALUES (%s, %s, %s, %s)
     ON CONFLICT (github_repo_id)
     DO UPDATE SET
         owner_name = EXCLUDED.owner_name,
-        github_repo = EXCLUDED.github_repo;                              
+        repo_name = EXCLUDED.repo_name;                              
     """)
 
     # upsert query for Twitter table
@@ -163,13 +164,17 @@ def insert_to_related_table_at_once(conn, data_list):
                         owner, repo_name = repo
                 
                     cur.execute(insert_query_on_github_table, (near_address, uuid4(), owner, repo_name))
+                
+                logger.log_insert_project(near_address)
 
                 # insert into Twitter table
                 twitter_link = parse_twitter_link(twitter_link)
                 cur.execute(insert_query_on_twitter_table, (near_address, twitter_link, created_date))
+                logger.log_insert_twitter(near_address, twitter_link)
                 
 
     except Exception as e:
+        logger.log_error(near_address, traceback.format_exc())
         print("[error] Failed to insert data, which is near_address and json :", near_address)
         print("[error] Failed to insert data, which is near_address and json :", (website, twitter_link, github_repos))
         print("[error] Error message :", traceback.format_exc())
@@ -180,15 +185,20 @@ def insert_to_related_table_at_once(conn, data_list):
 
 
 def main():
+    logger.log_start_process("InsertProjects.py")
     conn = connect_to_db()
+    logger.log_connection()
     print("[info] Connected to DB")
     user_list = in_usd_more_than_one(conn)
+    logger.log_selction_data(len(user_list))
     print("[info] Got all users :", len(user_list))
     insert_to_related_table_at_once(conn, user_list)
+    
     print("[info] Inserted all users to the table")
     close_connection(conn)
     print("[info] Connection closed")
-
+    logger.log_disconnection()
+    logger.log_end_process("InsertProjects.py")
 if __name__ == "__main__":
     main()
 
