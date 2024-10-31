@@ -16,7 +16,15 @@ Dead Project Snipper offers an automated agent that
 
 # System Architecture
 
-![Dead Project Snipper.png](https://i.ibb.co/t4HMKjt/Dead-Project-Snipper.png)
+original proposition
+
+![Original Dead Project Snipper.png](https://i.ibb.co/t4HMKjt/Dead-Project-Snipper.png)
+
+Updated 241101
+
+![image](https://github.com/user-attachments/assets/7a5a8f14-2a36-428c-8631-554ac459a7a0)
+
+
 
 ### System Flow
 
