@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Projects (
 -- Table XHandles
 CREATE TABLE IF NOT EXISTS XHandles (
     project_wallet_address VARCHAR REFERENCES Projects(project_wallet_address),
-    handle VARCHAR UNIQUE Null,
+    handle VARCHAR UNIQUE NOT NULL,
     account_id VARCHAR,
     Description VARCHAR,
     condition VARCHAR(20),
@@ -67,13 +67,18 @@ CREATE TABLE IF NOT EXISTS GithubRepoActivityLog (
 CREATE TABLE IF NOT EXISTS WalletActivityLog (
     project_wallet_address VARCHAR REFERENCES Projects(project_wallet_address),
     trasaction_count INT,
+    datetime TIMESTAMP
 );
 
 -- Table ProjectReport
 CREATE TABLE IF NOT EXISTS ProjectReport (
     project_wallet_address VARCHAR REFERENCES Projects(project_wallet_address),
-    report VARCHAR,
-    score FLOAT,
+    report_uuid UUID Unique,
+    report Json,
+    score INT,
+    twitter_score INT,
+    github_score INT,
+    near_score INT,
     dead_or_alive BOOLEAN,
     created_date TIMESTAMP,
     modified_date TIMESTAMP,
